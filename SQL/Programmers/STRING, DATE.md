@@ -1,0 +1,44 @@
+# 👀 프로그래머스 SQL SELECT 문제 모음
+
+## 1번 - 루시와 엘라 찾기
+```MySQL
+SELECT ANIMAL_ID, NAME, SEX_UPON_INTAKE
+FROM ANIMAL_INS
+WHERE NAME IN ('Lucy', 'Ella', 'Pickle', 'Rogan', 'Sabrina', 'Mitty')
+ORDER BY ANIMAL_ID;
+```
+
+## 2번 - 이름에 el이 들어가는 동물 찾기
+```MySQL
+SELECT ANIMAL_ID, NAME
+FROM ANIMAL_INS
+WHERE NAME LIKE '%EL%' AND ANIMAL_TYPE = 'Dog'
+ORDER BY NAME;
+```
+
+## 3번 - 중성화 여부 파악하기
+```MySQL
+SELECT ANIMAL_ID, NAME, 
+CASE WHEN (SEX_UPON_INTAKE LIKE '%Neutered%') THEN 'O'
+WHEN (SEX_UPON_INTAKE LIKE '%Spayed%') THEN 'O'
+ELSE 'X' END AS '중성화'
+FROM ANIMAL_INS
+ORDER BY ANIMAL_ID;
+```
+
+## 4번 - 오랜 기간 보호한 동물(2)
+```MySQL
+SELECT ins.ANIMAL_ID, ins.NAME
+FROM ANIMAL_INS AS ins
+INNER JOIN ANIMAL_OUTS AS outs
+ON ins.ANIMAL_ID = outs.ANIMAL_ID
+ORDER BY outs.DATETIME - ins.DATETIME DESC
+LIMIT 2;
+```
+
+## 5번 - DATETIME에서 DATE로 형 변환
+```MySQL
+SELECT ANIMAL_ID, NAME, DATE_FORMAT(DATETIME, '%Y-%m-%d')
+FROM ANIMAL_INS
+ORDER BY ANIMAL_ID;
+```
